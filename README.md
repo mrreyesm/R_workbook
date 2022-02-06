@@ -1,1 +1,1 @@
-# R solutions from the Statistics workbook and Cheetsheet
+# R solutions from a Statistics workbook and Cheatsheet
