@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1644175829129.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "870823546",
+    "id" : "20E92540",
+    "lastKnownWriteTime" : 1644175862,
+    "last_content_update" : 1644175862026,
+    "path" : "~/R scripts/R_workbook/cheatsheet.R",
+    "project_path" : "cheatsheet.R",
+    "properties" : {
+        "cursorPosition" : "193,0",
+        "scrollLine" : "168",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
