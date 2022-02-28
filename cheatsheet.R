@@ -1,38 +1,31 @@
 ################################################################################
 ################################################################################
 #----------------------CHEAT SHEET---------------------------------------------#
-#*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*#
-#####################################LIBRARIES
-
-################################################################
-##
-install.packages("usethis")
-library(usethis)
-#
-
-#
-#
-#
-#
-library(tidyverse) # just import it
-library(haven) #to play with SPSS files
-library(epiDisplay) #nice frequency tables
-library(Hmisc) # useful for data analysis rcorr
-library(pastecs) #desc statistics
+################################################################################
+################################################################################
+#######################LIBRARIES################################################
+if (!require("pacman")) install.packages("pacman")
+library(pacman)
+p_load(usethis)
+p_load(tidyverse) # just import it
+p_load(haven) #to play with SPSS files
+p_load(epiDisplay) #nice frequency tables
+p_load(Hmisc) # useful for data analysis rcorr
+p_load(pastecs) #desc statistics
 options(scipen=100) #options to alter desc stats in pastecs
 options(digits=3) #options to alter desc stats in pastecs
-library(nortest) #Anderson-Darling normality test
-library(moments) #skewness
-library(reshape2) #transform data
-library(qqplotr) #qqplots
-library(ggpubr)  #more fancy graphs
-library(xlsx) #excel
-library(janitor) #adds a total sum row
-library(corrplot) #correlation plots
-library(rstatix) #cramer's V
-library(foreign) #mport data file
-library(fBasics) # Basic Statistics
-library(lmtest) #dwtest
+p_load(nortest) #Anderson-Darling normality test
+p_load(moments) #skewness
+p_load(reshape2) #transform data
+p_load(qqplotr) #qqplots
+p_load(ggpubr)  #more fancy graphs
+p_load(xlsx) #excel
+p_load(janitor) #adds a total sum row
+p_load(corrplot) #correlation plots
+p_load(rstatix) #cramer's V
+p_load(foreign) #mport data file
+p_load(fBasics) # Basic Statistics
+p_load(lmtest) #dwtest
 #---------------------------FUNCTIONs------------------------------------------#
 #---------------------------------> Functions to flag Outliers for 1s, 2s and 3s
 outlier_flag_3s<-function(x)
@@ -157,13 +150,14 @@ employee  <- employee  %>% mutate(motivation_lbl = as_factor(motivation))
 view(job)
 #-------------------------------------------------------------recoding & binning
 job$gender_dic <- ifelse(job$gender == "m", 1, 0)
-x$y <- ifelse(x$y == -1, NA, x$y)
+#x$y <- ifelse(x$y == -1, NA, x$y)
 #replace missing values (-1) & transform factor into character for numeric lbls
-x$y_label <- ifelse(x$y_label == "-1", NA,as.character(x$y_label))
+#x$y_label <- ifelse(x$y_label == "-1", NA,as.character(x$y_label))
 #Other ecoding and NA identification
-x <- x %>% mutate(z = case_when(is.na(y) ~ NA_real_, y=="X" ~ 1  ))
-x <- x %>% mutate(y = case_when(is.na(z ) ~ "NA"  , z == 1  ~ "X"))
-x$y <- ifelse(x$y == "NA", NA, x$y)
+#x <- x %>% mutate(z = case_when(is.na(y) ~ NA_real_, y=="X" ~ 1  ))
+#x <- x %>% mutate(y = case_when(is.na(z ) ~ "NA"  , z == 1  ~ "X"))
+#x$y <- ifelse(x$y == "NA", NA, x$y)
+
 #Most effective for many variables in conjunction with unique
 job$type_job_rec <- recode(job$type, "Team Manager"=1,
                            "Office Worker"=2,
@@ -177,13 +171,12 @@ length(unique(job[["type_job"]]))
 
 #binning and determine categories
 #from 3 to 5, from 6 to 7, and from 8 to 10. Use with min and max functions!
-y_thresholds<-c(3,5,7,10)
-y_labels<-c('3-5','6-7','8-10')
-x$y_categories<-cut(x$y,breaks=y_thresholds,labels=y_labels,right=T)
-
+#y_thresholds<-c(3,5,7,10)
+#y_labels<-c('3-5','6-7','8-10')
+#x$y_categories<-cut(x$y,breaks=y_thresholds,labels=y_labels,right=T)
 salary.thresholds<-c(0,1500,2500,4000)
 salary.labels<-c('low','middle','high')
-employee_survey$salary.categories<-cut(employee_survey$salary,
+employee$salary.categories<-cut(employee$salary,
                                        breaks=salary.thresholds,
                                        labels=salary.labels,right=T)
 #---------------------------------------------------------Descriptive statistics
@@ -196,6 +189,7 @@ stat.desc(job$salary,basic=TRUE, desc=TRUE, norm=FALSE, p=0.95)#use describeme()
 quantile(job$salary, 0.95, na.rm = TRUE)
 # a quantile defines a particular part of a dataset, e.g. how many values in a
 # distribution are above or below a certain limit.
+
 # descriptive statistics for grouped variables.
 job %>% group_by(gender) %>% summarise(mean(salary),
                                        median(salary),
@@ -799,7 +793,6 @@ job_profile %>% dplyr::filter(Gender == 'm' &
                                 Jobtype %in% c("Team Manager","Office Worker"))%>% nrow()
 par(mfrow=c(1,2)) # for rbase plots
 ggarrange(A, B, labels = c("A", "B"), ncol = 2, nrow = 1)# for 2 ggplots
-
 
 scaled <- sapply (it_project[,-1],scale)
 #rename the z columns
